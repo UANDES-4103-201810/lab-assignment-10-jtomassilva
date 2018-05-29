@@ -7,8 +7,55 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
+	
+<div class="row"> 
+<div class="container"> 
+	<%= link_to "Home Page", root_path %>
+	<div align="right">
+		<li><%= link_to "Sign Up", new_user_registration_path %></li>
+		<% if user_signed_in? %>
+			<li><%= link_to "Sign Out", destroy_user_session_path, method: :delete %></li>
+		<% else %>
+			<li><%= link_to "Log In", new_user_session_path %></li>
+			<fb:login-button 
+  scope="public_profile,email"
+  onlogin="checkLoginState();">
+</fb:login-button>
+		<%end%>
+	</div>
+	
+	
+</div>	
+</div>	
   <body>
-    <%= yield %>
+<script>
+	  window.fbAsyncInit = function() {
+	    FB.init({
+	      appId      : '138483117016060',
+	      cookie     : true,
+	      xfbml      : true
+	    });
+	      
+	    FB.AppEvents.logPageView();   
+	      
+	  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+    <div class="container"> 
+    	<p class="notice"><%= notice %></p>
+    	<p class="alert"><%= alert %></p>
+    	<%= yield %>
+    </div>
   </body>
 </html>
+
+
+
+
